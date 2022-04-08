@@ -359,7 +359,7 @@ def allow_empty_variables(module_or_cls: T) -> T:
 def assert_tf2():
   if not assert_tf2.checked:
     with tf.init_scope():
-      assert not tf.executing_eagerly(), "Sonnet v2 requires TensorFlow 2"
+      assert tf.executing_eagerly(), "Sonnet v2 requires TensorFlow 2"
     assert_tf2.checked = True
 
 assert_tf2.checked = False
@@ -398,6 +398,8 @@ class Module(tf.Module, metaclass=ModuleMetaclass):
         identifier. If ``name`` is not provided then the class name for the
         current instance is converted to ``lower_snake_case`` and used instead.
     """
+    print("###!!! TensorFlow version, from sonnet: {} \n\n".format(tf.__version__))
+    print("###!!! Eager excecution: {} \n\n".format(tf.executing_eagerly()))
     assert_tf2()
 
     super().__init__(name=name)
